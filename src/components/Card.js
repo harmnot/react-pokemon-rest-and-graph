@@ -8,12 +8,13 @@ const Card = ({name, types, source, keyC, id}) => {
     const {dispatch} = useContext(MainContext)
     const history = useHistory()
     const [countOwned, setOwned] = useState(0)
+    const [endpointDeletePokex, endpointGetDetailPokemon] = [`${url}/pokex/${keyC}`, `${url}/pokemons/${id}`]
 
     const goToDetail = () => !id ? null : history.push("/detail/"+id)
 
     useEffect(() => {
         const getOwned = async () => {
-            const getData = await fetch(`${url}/pokemons/${id}`)
+            const getData = await fetch(endpointGetDetailPokemon)
             if(getData.status === 200) {
                 const {result} = await getData.json()
                 setOwned(result.owned.length)
@@ -22,10 +23,11 @@ const Card = ({name, types, source, keyC, id}) => {
         if(id) {
             getOwned()
         }
+        // eslint-disable-next-line
     }, [id])
 
     const deletePoke = async () => {
-        const getData = await fetch(`${url}/pokex/${keyC}`, {method: "DELETE"})
+        const getData = await fetch(endpointDeletePokex, {method: "DELETE"})
         if (getData.status === 200) {
             dispatch({type: DELETE_MY_POKE, payload: {_id: keyC}})
         } else {
@@ -42,7 +44,7 @@ const Card = ({name, types, source, keyC, id}) => {
                 </div>
                 <div className="d-flex py-1 px-2 flex-column justify-content-center">
                     <div className="item-box">
-                        <a> {name} </a>
+                        <div> {name} </div>
                     </div>
                     <div className="d-flex flex-row">
                         {types.map((v, index)=> {

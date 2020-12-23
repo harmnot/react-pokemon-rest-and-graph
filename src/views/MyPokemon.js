@@ -21,9 +21,7 @@ const FIND_POKEMON = gql`
 `
 
 const MyPokemon = ({name, source, pokeID, keyC}) => {
-    const {error, data} = useQuery(FIND_POKEMON, {
-        variables: {name: String(pokeID)}
-    })
+    const {error, data} = useQuery(FIND_POKEMON, {variables: {name: String(pokeID)}})
 
     return (
         <>
@@ -45,11 +43,12 @@ export default function MyListPokemon() {
     const [loading, setLoading] = useState(false)
     const {state, dispatch} = useContext(MainContext)
     const {email} = useParams()
+    const endpointGetMyPokemons = `${url}/user/detail?email=${email}`
 
     useEffect(() => {
         const fetchMine = async () => {
             setLoading(true)
-            const callApi = await fetch(`${url}/user/detail?email=${email}`)
+            const callApi = await fetch(endpointGetMyPokemons)
             const getData = await callApi.json()
             if (callApi.status > 399) {
                 dispatch({type: FETCH_MY_POKEMONS, payload: undefined})
