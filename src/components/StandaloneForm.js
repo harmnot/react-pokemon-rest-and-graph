@@ -10,11 +10,12 @@ export const InputFindEmail = () => {
     const findEmail = async () => {
         try {
             const email = searchEmail.current.value
+            const [routeMyPokemon, endpointSearchEmail] = [`/my-pokemon/${email}`, `${url}/user/detail?email=${email}`]
             const rgx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (!rgx.test(email)) {
                 setErrorSearch("invalid email address")
             } else {
-                const callApi = await fetch(`${url}/user/detail?email=${email}`)
+                const callApi = await fetch(endpointSearchEmail)
                 if (callApi.status > 399) {
                     setErrorSearch("can't found any email")
                 } else {
@@ -23,7 +24,7 @@ export const InputFindEmail = () => {
                         nav.style.width = "0";
                     }
                     setErrorSearch("")
-                    history.push(`/my-pokemon/${email}`)
+                    history.push(routeMyPokemon)
                 }
             }
         } catch (err) {

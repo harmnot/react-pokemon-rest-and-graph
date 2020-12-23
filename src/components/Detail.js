@@ -4,7 +4,6 @@ import P from "../api/Api"
 import {Badge} from "../views/Home";
 import {url} from "../api/internal";
 
-
 export const Detail = props => {
     const [data, setData] = useState(null)
     const [nickname, emailUser] = [useRef(""), useRef("")]
@@ -16,9 +15,12 @@ export const Detail = props => {
     const [isGoingToCatch, setGoingToCatch] = useState(false)
     const history = useHistory();
     const emailRgx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const endpointCreatePokex = `${url}/pokex/createpokex`
 
     const fetchDetail = async () => await P.getPokemonByName(+props.match.params.id)
     const handleClick = i => history.push(`/${i}`)
+
+    const defineClassCatch = isCatch ? "d-flex flex-column justify-content-center mx-auto" :"d-flex flex-column justify-content-center mx-auto showTr"
 
     const randomToCatch = () => {
         const conditions = [true, false, true, true, false, false]
@@ -58,7 +60,7 @@ export const Detail = props => {
                 "idPokemon": +props.match.params.id,
                 "image": data["pic"]
             }
-            const hitApi = await fetch(`${url}/pokex/createpokex`, {
+            const hitApi = await fetch(endpointCreatePokex, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -144,23 +146,22 @@ export const Detail = props => {
             {(data && data !== "error") &&
             <div className="">
                 <div className="container">
-                    <button type="button" className="btn btn-warning mt-5 ml-3" onClick={history.goBack}>Back
-                    </button>
+                    <button type="button" className="btn btn-warning mt-5 ml-3" onClick={history.goBack}>Back</button>
                 </div>
                 <div className="d-flex my-5 justify-content-center mx-auto">
                     <div className="d-flex flex-column w-100">
                         {(!isGoingToCatch && failToCatch) && <div className="p-2 mx-auto ">
                             <h2 style={{fontWeight: "700"}}> {data["name"]}</h2>
                         </div>}
-                        <div className="d-flex flex-column justify-content-center mx-auto">
+                        <div className={defineClassCatch}>
                             {(!isGoingToCatch && !isCatch && failToCatch) &&
                             <div className="p-2 mx-auto">
-                                <img src={data["pic"]} alt="" width="300"/>
+                                <img src={data["pic"]} alt="pokemon.png" width="300"/>
                             </div>}
                             {(!isGoingToCatch && !isCatch && !failToCatch) &&
                             <div className="text-center">
                                 <div className="p-2 mx-auto">
-                                    <img src="/images/caat.jpg" alt="" width="300"/>
+                                    <img src="/images/caat.jpg" alt="meow.jpg" width="300"/>
                                 </div>
                                 <div>
                                     <h4> Sorry {data["name"]} failed to catch </h4>
@@ -203,16 +204,16 @@ export const Detail = props => {
                                         bag</button>}
                                     {goingToSave &&
                                     <button className="btn btn-primary" type="button">
-                                               <span className="spinner-border spinner-border-sm mr-1" role="status"
-                                                     aria-hidden="true"/>
+                                        <span className="spinner-border spinner-border-sm mr-1" role="status"
+                                              aria-hidden="true"/>
                                         Save to bag
                                     </button>}
                                 </div>
                             </div>}
                             {!hideCatchButton &&
                             <div className="p-2 mx-auto mb-3">
-                                <button type="button" className="btn btn-dark mt-5 ml-3" onClick={catchThis}>Catch
-                                    me
+                                <button type="button" className="btn btn-dark mt-5 ml-3" onClick={catchThis}>
+                                    Catch me
                                 </button>
                             </div>}
                         </div>

@@ -48,7 +48,7 @@ video {
     overflow: hidden;
 }
 
-.item-box a {
+.item-box div {
     word-break: break-all;
 }
 
@@ -155,4 +155,8 @@ video {
 
 .del {
     cursor: pointer;
+}
+
+.showTr {
+  height: 400px;
 }

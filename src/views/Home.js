@@ -66,9 +66,7 @@ const Choose = () => {
          ))
     }
 
-    const handleClick = (i) => {
-      history.push(`/${i}`)
-    }
+    const handleClick = i => history.push(`/${i}`)
 
     const homePageButton = () => {
         if(location.pathname !== "/") {
