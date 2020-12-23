@@ -1,1 +1,1 @@
-export const url = "http://localhost:3300/api"
+export const url = "https://pokex-for-react.herokuapp.com/api"
