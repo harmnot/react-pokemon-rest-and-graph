@@ -174,7 +174,7 @@ export const Detail = props => {
                             </div>}
                             {(isGoingToCatch && !isCatch) &&
                             <div className="p-2 mx-auto">
-                                <img src="/images/pokball11.gif" alt="pokeball gif"/>
+                                <img src="/images/pokball11.gif" alt="pokeball gif" width="400"/>
                             </div>}
                             {(!isGoingToCatch && isCatch) &&
                             <div className="mb-4 p-3 d-flex flex-column flex-wrap">
